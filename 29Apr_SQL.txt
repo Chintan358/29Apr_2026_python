@@ -1,0 +1,54 @@
+RDBMS :Relational database management system
+********************************************
+Mysql
+oracle
+db2
+postgre sql
+*******************
+SQL : structure query language.
+********************************
+DDL: data defiantion lang.
+*************************
+create : create database or table
+alter : to make changes in create table
+drop : remove table or database
+truncate : remove all data from table, table structure remain as it is
+
+DATABASE : 
+create database myapp;
+use myapp;
+drop database myapp;
+
+Table : 
+There are 2 types of constrains :
+1 : datatype*
+int  - numeric
+double - flaoting or real number
+varchar - numbers and chars.
+data - date
+
+2 : key 
+notnull
+unique 
+primary key
+foreign key
+
+
+create table student(id int primary key,name varchar(20),email varchar(20));
+
+alter table student add column (phone int);
+alter table student modify column phone varchar(20);
+alter table student drop column phone;
+alter table student rename to std;
+
+truncate std;
+
+drop table std;
+
+*********************************************************************************
+*********************************************************************************
+collage - student
+company - emp
+eshop - product   
+
+
