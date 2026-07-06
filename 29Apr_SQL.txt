@@ -47,8 +47,214 @@ drop table std;
 
 *********************************************************************************
 *********************************************************************************
-collage - student
-company - emp
-eshop - product   
+DML : data manipulation lang.
+***********************************
+insert
+update
+delete
+
+insert into student values(1,'Saed','saed@gmail.com');
+insert into student(id,name) values(2,'Vivek');
+
+update student set email='vivek@gmail.com' where id=2;
+
+delete from student where id=1;
+
+*********************************************************
+DQL : data query lang.
+************************
+select
+
+CREATE TABLE emp (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(15),
+    age INT,
+    sal DECIMAL(10,2),
+    dept VARCHAR(50)
+);
+
+***********************
+
+select * from emp;
+select name,phone from emp;
+select distinct(dept) from emp;
+
+select * from emp where dept='IT';
+select * from emp where dept='IT' or dept='HR';
+select * from emp where dept='IT' and sal>70000;
+
+select * from emp where dept in('IT','HR');
+select * from emp where dept not in('IT','HR');
+
+select * from emp where name like 'an%';
+select * from emp where name like '%a';
+select * from emp where name like '__a%';
+select * from emp where name like '%g%';
+ 
+select * from emp order by name;
+select * from emp order by name desc;
+
+select * from emp limit 10,5;
+
+select * from emp order by sal desc limit 0,1;
+
+
+select max(sal) from emp;
+select min(sal) from emp;
+select sum(sal) from emp;
+select avg(sal) from emp;
+select count(*) as total from emp;
+
+select * from emp where sal = (select max(sal) from emp);
+
+select * from emp where sal = (
+select max(sal) from emp where sal < (select max(sal) from emp));
+
+select dept,max(sal) from emp group by dept having max(sal)>50000;
+
+****************************************************************************
+TCL : transaction control lang.
+**********************************
+commit
+rollback
+savepoint
+
+start transaction;
+delete from emp where id=4;
+savepoint a;
+update emp set age=33 where id=2;
+
+commit;
+rollback to a;
+
+***************************************************************************************
+***************************************************************************************
+FOREIGNKEY :
+
+create table author(id int primary key auto_increment,name varchar(20));
+create table book(id int primary key auto_increment,name varchar(20),
+price double, aid int,foreign key(aid) references author(id));
+
+
+
+Joins : 
+inner
+outer 
+-right
+-left
+-full
+
+
+
+
+
+select * from book join author on book.aid=author.id;
+select book.name, author.name from book join author on book.aid=author.id;
+select b.name, a.name from book b join author a on b.aid=a.id;
+
+select b.name, a.name from book b left join author a on b.aid=a.id;
+select b.name, a.name from book b right join author a on b.aid=a.id;
+
+select b.name, a.name from book b left join author a on b.aid=a.id union
+select b.name, a.name from book b right join author a on b.aid=a.id;
+
+************************************************************************
+view : 
+
+CREATE 
+VIEW `myapp`.`library` AS
+    SELECT 
+        `b`.`name` AS `book`, `a`.`name` AS `author`
+    FROM
+        (`myapp`.`book` `b`
+        LEFT JOIN `myapp`.`author` `a` ON ((`b`.`aid` = `a`.`id`))) 
+    UNION SELECT 
+        `b`.`name` AS `book`, `a`.`name` AS `author`
+    FROM
+        (`myapp`.`author` `a`
+        LEFT JOIN `myapp`.`book` `b` ON ((`b`.`aid` = `a`.`id`)))
+
+*****************************************************************************
+Sp : 
+
+1 : CREATE DEFINER=`root`@`localhost` PROCEDURE `emps`()
+BEGIN
+		select * from emp;
+        select * from emp where dept='IT';
+        select * from emp where age>30;
+END
+
+-call emps
+
+2 : CREATE DEFINER=`root`@`localhost` PROCEDURE `empbyid`(in eid int)
+BEGIN
+		select * from emp where id=eid;
+END
+
+-call empbyid(7);
+
+
+3 : CREATE DEFINER=`root`@`localhost` PROCEDURE `salbyid`(in eid int,out salary double)
+BEGIN
+		select sal into salary from emp where id=eid;
+END
+
+- call salbyid(8,@sal);
+select @sal as salary;
+
+4 : CREATE PROCEDURE `agebyid` (inout sr int)
+BEGIN
+	select age into sr from emp where id=sr;
+END
+
+-set @sr = 8;
+call agebyid(@sr);
+select @sr as age;
+
+************************************************************************
+
+trigger : 
+
+
+DELIMITER $$
+
+CREATE TRIGGER emplog1
+BEFORE DELETE ON emp
+FOR EACH ROW
+BEGIN
+   insert into emp_log values(old.id, old.name, old.email,old.phone,old.age, old.sal,old.dept);
+END $$
+
+DELIMITER ;
+
+
+*********************************************************************
+****************************************end**************************
+*********************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
