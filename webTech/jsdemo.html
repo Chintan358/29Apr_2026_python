@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        function test() {
+
+
+            var q = document.getElementById("q").value
+            var data = document.getElementById("data")
+            data.innerHTML = q
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <input type="text" id="q">
+    <button onclick="test()">Click me</button>
+    <div id="data"></div>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+
+    <script>
+
+        function validation() {
+
+            var uname = document.getElementById("uname").value
+            var email = document.getElementById("email").value
+            var phone = document.getElementById("phone").value
+            var pass = document.getElementById("pass").value
+            var cpass = document.getElementById("cpass").value
+
+
+            var unameErr = document.getElementById("unameErr")
+            var emailErr = document.getElementById("emailErr")
+            var phoneErr = document.getElementById("phoneErr")
+            var passErr = document.getElementById("passErr")
+            var cpassErr = document.getElementById("cpassErr")
+
+            var btn = document.getElementById("btn")
+
+            var phoneExp = /^[0-9]{10}$/
+
+            if (uname == '' || uname == null) {
+                unameErr.innerHTML = "Username Required"
+                btn.disabled = true
+            }
+            else {
+                unameErr.innerHTML = ""
+                btn.disabled = false
+            }
+
+
+            if (email == '' || email == null) {
+                emailErr.innerHTML = "Email Required"
+                btn.disabled = true
+            }
+            else {
+                emailErr.innerHTML = ""
+                btn.disabled = false
+            }
+
+            if (phone == '' || phone == null) {
+                phoneErr.innerHTML = "Phone Required"
+                btn.disabled = true
+            }
+            else if (!phoneExp.test(phone)) {
+                phoneErr.innerHTML = "Invalid number"
+                btn.disabled = true
+            }
+            else {
+                phoneErr.innerHTML = ""
+                btn.disabled = false
+            }
+
+            if (pass == '' || pass == null) {
+                passErr.innerHTML = "Password Required"
+                btn.disabled = true
+            }
+            else {
+                passErr.innerHTML = ""
+                btn.disabled = false
+            }
+
+
+            if (cpass == '' || cpass == null) {
+                cpassErr.innerHTML = "Confirm Password Required"
+                btn.disabled = true
+            }
+            else if (cpass != pass) {
+                cpassErr.innerHTML = "Cpass must be same as a pass"
+                btn.disabled = true
+            }
+            else {
+                cpassErr.innerHTML = ""
+                btn.disabled = false
+            }
+
+
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-5 mx-auto card p-5 mt-5 bg-warning">
+                <h2 class="text-success">Registration Form</h2>
+                <hr>
+                <form action="">
+
+                    <div class="form-group">
+                        <label for="">Username</label>
+                        <input type="text" class="form-control" id="uname" onkeyup="validation()">
+                        <span id="unameErr" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Email</label>
+                        <input type="text" class="form-control" id="email" onkeyup="validation()">
+                        <span id="emailErr" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Phone</label>
+                        <input type="text" class="form-control" id="phone" onkeyup="validation()">
+                        <span id="phoneErr" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Password</label>
+                        <input type="password" class="form-control" id="pass" onkeyup="validation()">
+                        <span id="passErr" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Confirm Password</label>
+                        <input type="password" class="form-control" id="cpass" onkeyup="validation()">
+                        <span id="cpassErr" class="text-danger"></span>
+                    </div>
+                    <br>
+                    <input type="submit" class="btn btn-success" id="btn">
+                    <input type="reset" class="btn btn-primary">
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
