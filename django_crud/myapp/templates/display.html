@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f6f9;
+        }
+
+        .table-card {
+            margin-top: 60px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: #0d6efd;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            padding: 18px;
+        }
+
+        table th {
+            text-align: center;
+        }
+
+        table td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card table-card">
+
+            <div class="card-header">
+                Student Details
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-bordered table-hover table-striped text-center">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Student Name</th>
+                            <th>Email</th>
+                            <th>Age</th>
+                            <th colspan="2">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {%for student in students%}
+
+                        <tr>
+                            <td>{{student.id}}</td>
+                            <td> {{student.name}}</td>
+                            <td>{{student.email}}</td>
+                            <td>{{student.age}}</td>
+                            <td><a href="{%url 'delete'%}?id={{student.id}}" class="btn btn-danger">DELETE</a></td>
+                            <td><a href="{%url 'update'%}?id={{student.id}}" class="btn btn-primary">UPDATE</a></td>
+                        </tr>
+
+                        {%endfor%}
+
+                    </tbody>
+                </table>
+
+                <a href="{%url 'index'%}" class="btn btn-outline-primary mt-2">Add Student</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
