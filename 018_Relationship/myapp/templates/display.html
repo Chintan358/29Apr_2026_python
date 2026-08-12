@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+        }
+
+        th {
+            background: #007BFF;
+            color: white;
+            padding: 15px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        img {
+            width: 70px;
+            height: 70px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 2px;
+        }
+
+        .view {
+            background: #17a2b8;
+        }
+
+        .edit {
+            background: #28a745;
+        }
+
+        .delete {
+            background: #dc3545;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        @media(max-width:768px) {
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 15px;
+                background: white;
+                box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+                padding: 10px;
+            }
+
+            td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+
+            td::before {
+                position: absolute;
+                left: 10px;
+                font-weight: bold;
+                text-align: left;
+            }
+
+            td:nth-child(1)::before {
+                content: "Image";
+            }
+
+            td:nth-child(2)::before {
+                content: "Name";
+            }
+
+            td:nth-child(3)::before {
+                content: "Price";
+            }
+
+            td:nth-child(4)::before {
+                content: "Qty";
+            }
+
+            td:nth-child(5)::before {
+                content: "Category";
+            }
+
+            td:nth-child(6)::before {
+                content: "Action";
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Product List</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {%for product in products%}
+
+                <tr>
+                    <td>
+                        <img src="media/{{product.image}}" alt="{{product.image}}">
+                    </td>
+                    <td>{{product.name}}</td>
+                    <td>₹{{product.price}}</td>
+                    <td>{{product.qty}}</td>
+                    <td>{{product.category.name}}</td>
+                    <td>
+
+                        <a class="btn edit">Edit</a>
+                        <a href="{%url 'delete' %}?id={{product.id}}" class="btn delete">Delete</a>
+                    </td>
+                </tr>
+                {%endfor%}
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</body>
+
+</html>
