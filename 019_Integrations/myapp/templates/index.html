@@ -4,65 +4,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Document</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-4.0.0.min.js"
         integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
 </head>
 
-<body>
-    <input type="text" id="amt">
-    <button id="rzp-button1">Pay with Razorpay</button>
+<body class="bg-light">
+
+    <div class="container py-5">
+
+        <!-- Page Heading -->
+        <div class="text-center mb-5">
+            <h1 class="fw-bold">Payment & Communication</h1>
+            <p class="text-muted">
+                Razorpay Payment, Email and SMS
+            </p>
+        </div>
+
+
+        <!-- ================= PAYMENT ================= -->
+
+        <div class="row justify-content-center mb-5">
+
+            <div class="col-md-8 col-lg-6">
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="bi bi-credit-card"></i>
+                            Razorpay Payment
+                        </h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <label for="amt" class="form-label">
+                            Enter Amount
+                        </label>
+
+                        <div class="input-group mb-3">
+
+                            <span class="input-group-text">
+                                ₹
+                            </span>
+
+                            <input type="text" id="amt" class="form-control" placeholder="Enter amount">
+
+                        </div>
+
+                        <button id="rzp-button1" class="btn btn-primary w-100">
+
+                            Pay with Razorpay
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <hr class="my-5">
+
+
+        <!-- ================= EMAIL ================= -->
+
+        <div class="row justify-content-center mb-5">
+
+            <div class="col-md-8 col-lg-7">
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-success text-white">
+
+                        <h4 class="mb-0">
+                            Send Email
+                        </h4>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <span class="text-success d-block mb-3">
+                            {{success}}
+                        </span>
+
+                        <form action="{%url 'emailsend'%}" method="post">
+
+                            {%csrf_token%}
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Email
+                                </label>
+
+                                <input type="text" name="to" class="form-control" placeholder="Enter email">
+
+                            </div>
+
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Subject
+                                </label>
+
+                                <input type="text" name="subject" class="form-control" placeholder="Enter subject">
+
+                            </div>
+
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Message
+                                </label>
+
+                                <textarea name="message" class="form-control" rows="5"></textarea>
+
+                            </div>
+
+
+                            <input type="submit" class="btn btn-success w-100" value="Send Email">
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <hr class="my-5">
+
+
+        <!-- ================= SMS ================= -->
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-8 col-lg-7">
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-warning">
+
+                        <h4 class="mb-0">
+                            Send SMS
+                        </h4>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <span class="text-success d-block mb-3">
+                            {{msg}}
+                        </span>
+
+                        <form action="{%url 'sms'%}" method="post">
+
+                            {%csrf_token%}
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Mobile Number
+                                </label>
+
+                                <input type="text" name="number" class="form-control" placeholder="Enter number">
+
+                            </div>
+
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Message
+                                </label>
+
+                                <textarea name="msg" class="form-control" rows="5"></textarea>
+
+                            </div>
+
+
+                            <input type="submit" class="btn btn-warning w-100" value="Send SMS">
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Razorpay Checkout -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
     <script>
 
         document.getElementById('rzp-button1').onclick = function (e) {
+
             e.preventDefault();
 
             var amt = $("#amt").val()
+
             $.get("payment", { amt }, function (rt) {
 
 
                 var options = {
-                    "key": "rzp_test_TOqCWmcFFPZQOB", // Enter the Key ID generated from the Dashboard
-                    "amount": rt.amount, // Amount is in currency subunits. 
+
+                    "key": "rzp_test_TOqCWmcFFPZQOB",
+
+                    "amount": rt.amount,
+
                     "currency": "INR",
+
                     "name": "Tops",
+
                     "description": "Test Transaction",
+
                     "image": "https://example.com/your_logo",
-                    "order_id": rt.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+
+                    "order_id": rt.id,
+
                     "handler": function (response) {
+
                         alert(response.razorpay_payment_id);
+
                         alert(response.razorpay_order_id);
+
                         alert(response.razorpay_signature)
+
                     },
+
                     "prefill": {
+
                         "name": "<name>",
+
                         "email": "<email>",
+
                         "contact": "<phone>"
+
                     },
+
                     "notes": {
+
                         "address": "Razorpay Corporate Office"
+
                     },
+
                     "theme": {
+
                         "color": "#3399cc"
+
                     }
+
                 };
+
+
                 var rzp1 = new Razorpay(options);
+
+
                 rzp1.on('payment.failed', function (response) {
+
                     alert(response.error.code);
+
                     alert(response.error.description);
+
                     alert(response.error.source);
+
                     alert(response.error.step);
+
                     alert(response.error.reason);
+
                     alert(response.error.metadata.order_id);
+
                     alert(response.error.metadata.payment_id);
+
                 });
+
+
                 rzp1.open();
+
             })
 
-
         }
+
     </script>
+
 </body>
 
 </html>
